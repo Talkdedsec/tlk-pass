@@ -1,32 +1,25 @@
 # TLK Pass
 
-Secure, offline password generator in a **single HTML file**. No build, no server, no dependencies — everything runs on your device using the Web Crypto API.
+Tek bir HTML dosyasından ibaret şifre üreteci. Kurulum, sunucu ya da bağımlılık yok; her şey tarayıcıda, Web Crypto ile çalışıyor.
 
-> Güvenli, çevrimdışı şifre üreteci — tek bir HTML dosyası. Kurulum yok, sunucu yok, bağımlılık yok.
+## Ne yapar
 
-## Features / Özellikler
+- Karakter, parola cümlesi ve PIN modu
+- Rastgelelik `crypto.getRandomValues`'tan gelir (rejection sampling, modulo bias yok)
+- Entropi (bit) ve tahmini kırılma süresini anlık gösterir
+- Tek seferde 1 / 5 / 10 üretim, tek tek ya da toplu kopyalama
+- Kopyalanan şifreyi 15 sn sonra panodan siler
+- TR / EN arayüz, tercihler tarayıcıda saklanır
+- `Enter` yeniler, `Ctrl+C` kopyalar
 
-- 🔐 **Cryptographically secure** — `crypto.getRandomValues` with rejection sampling (no modulo bias)
-- 🎛️ **Three modes** — characters, passphrase, PIN
-- 📊 **Live strength** — real entropy (bits) + estimated crack time
-- 📦 **Bulk generation** — 1 / 5 / 10 at once, copy one or copy all
-- 🧹 **Clipboard auto-clear** — wipes the copied password after 15s
-- 🌍 **TR / EN** interface, preferences saved locally
-- ⌨️ **Shortcuts** — `Enter` reroll, `Ctrl+C` copy
-- 🎨 Dark, premium UI — zero telemetry, fully offline
+## Kullanım
 
-## Usage / Kullanım
+`index.html`'i tarayıcıda aç. Hepsi bu.
 
-Just open `index.html` in any modern browser. That's it.
+## Not
 
-`index.html` dosyasını herhangi bir tarayıcıda aç, hepsi bu.
+Rastgelelik yalnızca işletim sisteminin CSPRNG'sinden gelir, `Math.random()` hiç kullanılmaz. Hiçbir ağ isteği yok, veri cihazdan çıkmaz.
 
-## Security / Güvenlik
+## Lisans
 
-- Randomness comes only from the OS CSPRNG via Web Crypto — never `Math.random()`.
-- Nothing leaves the browser; there are no network requests.
-- Character mode guarantees at least one character from each selected set, then shuffles.
-
-## License
-
-[MIT](LICENSE) © talkdedsec
+[MIT](LICENSE)
