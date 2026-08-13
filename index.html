@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TLK Pass</title>
+<style>
+  :root{
+    --bg:#0a0b0f; --panel:#12141b; --panel2:#171a22; --line:#242835; --line2:#2f3444;
+    --txt:#e7e9ee; --dim:#8b90a0; --accent:#00e08a; --accent2:#00b4ff;
+    --warn:#ff4d5e; --mid:#ffb020; --radius:16px;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%,rgba(0,180,255,.08),transparent 60%),
+      radial-gradient(900px 500px at 10% 110%,rgba(0,224,138,.07),transparent 55%),
+      var(--bg);
+    color:var(--txt);font-family:var(--sans);
+    display:flex;align-items:flex-start;justify-content:center;
+    padding:24px;min-height:100%;-webkit-font-smoothing:antialiased;
+  }
+  .app{width:100%;max-width:540px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:18px;letter-spacing:.5px}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .brand b{font-weight:700;font-size:15px}
+  .brand span{color:var(--dim);font-size:12px;font-family:var(--mono)}
+  .brand .lang{margin-left:auto;display:flex;gap:4px;font-family:var(--mono);font-size:12px}
+  .brand .lang button{background:none;border:1px solid var(--line);color:var(--dim);border-radius:7px;padding:4px 9px;cursor:pointer;transition:.15s}
+  .brand .lang button.on{color:var(--txt);border-color:var(--accent2);background:var(--panel2)}
+
+  .card{
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;box-shadow:0 30px 80px -40px rgba(0,0,0,.9);
+  }
+
+  .out{
+    position:relative;background:#0c0e14;border:1px solid var(--line);
+    border-radius:12px;padding:18px 92px 18px 18px;min-height:70px;
+    display:flex;align-items:center;overflow:hidden;
+  }
+  #pw{font-family:var(--mono);font-size:20px;line-height:1.5;word-break:break-all;user-select:all}
+  #pw .d{color:var(--accent2)} #pw .s{color:var(--mid)} #pw .u{color:var(--accent)}
+  .out .actions{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;gap:6px}
+  .ico{
+    width:36px;height:36px;border-radius:9px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--dim);cursor:pointer;display:grid;place-items:center;transition:.15s;
+  }
+  .ico:hover{color:var(--txt);border-color:var(--line2);background:#1c2029}
+  .ico svg{width:18px;height:18px}
+  .ico.copied{color:var(--accent);border-color:var(--accent)}
+
+  .meter{display:flex;gap:5px;margin:14px 0 6px}
+  .meter i{height:5px;flex:1;border-radius:4px;background:#20242f;transition:.25s}
+  .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);font-family:var(--mono);flex-wrap:wrap;gap:6px}
+  .meta b{color:var(--txt);font-weight:600}
+  #label{font-weight:700}
+
+  .tabs{display:flex;gap:6px;margin:20px 0 16px;background:#0c0e14;padding:5px;border-radius:11px;border:1px solid var(--line)}
+  .tab{flex:1;text-align:center;padding:9px;border-radius:8px;font-size:13px;font-weight:600;color:var(--dim);cursor:pointer;transition:.15s}
+  .tab.on{background:var(--panel2);color:var(--txt);box-shadow:0 2px 10px rgba(0,0,0,.4)}
+
+  .row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:none}
+  .row label{font-size:14px}
+  .row .hint{display:block;font-size:11px;color:var(--dim);margin-top:2px;font-family:var(--mono)}
+
+  .lenwrap{display:flex;align-items:center;gap:14px;padding:14px 0}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:5px;border-radius:5px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+    background:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.5);border:3px solid var(--panel)}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--panel);cursor:pointer}
+  .lenval{font-family:var(--mono);font-size:22px;font-weight:700;min-width:44px;text-align:right}
+
+  .sw{position:relative;width:44px;height:26px;flex:none}
+  .sw input{opacity:0;width:0;height:0;position:absolute}
+  .sw .track{position:absolute;inset:0;background:#2a2f3c;border-radius:20px;transition:.2s;cursor:pointer}
+  .sw .track::before{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+  .sw input:checked+.track{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  .sw input:checked+.track::before{transform:translateX(18px)}
+
+  select{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-family:var(--mono);cursor:pointer}
+  .seg{display:flex;gap:5px}
+  .seg button{background:var(--panel2);border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:7px 13px;cursor:pointer;font-family:var(--mono);font-weight:600;transition:.15s}
+  .seg button.on{color:#04120c;background:linear-gradient(90deg,var(--accent),var(--accent2));border-color:transparent}
+
+  .gen{margin-top:18px;width:100%;padding:15px;border:none;border-radius:12px;cursor:pointer;
+    font-size:15px;font-weight:700;color:#04120c;font-family:var(--sans);
+    background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.15s;
+    display:flex;align-items:center;justify-content:center;gap:9px}
+  .gen:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .gen:active{transform:translateY(0)}
+  .gen svg{width:18px;height:18px}
+
+  .bulk{margin-top:14px;display:none;flex-direction:column;gap:7px}
+  .bulk.on{display:flex}
+  .bulk .item{display:flex;align-items:center;gap:10px;background:#0c0e14;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-family:var(--mono);font-size:14px}
+  .bulk .item span{flex:1;word-break:break-all;user-select:all}
+  .bulk .item button{background:none;border:none;color:var(--dim);cursor:pointer;padding:4px}
+  .bulk .item button:hover{color:var(--accent)}
+  .bulk .item button svg{width:15px;height:15px}
+  .bulk .copyall{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:10px;cursor:pointer;font-family:var(--mono);font-size:13px;transition:.15s}
+  .bulk .copyall:hover{border-color:var(--accent2)}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--panel2);border:1px solid var(--accent);color:var(--txt);
+    padding:11px 18px;border-radius:11px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;font-family:var(--mono);z-index:9}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  .foot{text-align:center;margin-top:16px;font-size:11px;color:var(--dim);font-family:var(--mono);line-height:1.7}
+  .foot kbd{background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-family:var(--mono)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="brand">
+    <span class="dot"></span><b>TLK&nbsp;Pass</b><span id="tag">// güvenli şifre üreteci</span>
+    <span class="lang"><button data-lang="tr" class="on">TR</button><button data-lang="en">EN</button></span>
+  </div>
+  <div class="card">
+    <div class="out">
+      <div id="pw"></div>
+      <div class="actions">
+        <button class="ico" id="reroll" title="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </button>
+        <button class="ico" id="copy" title="">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="meta">
+      <span id="label">—</span>
+      <span><span data-t="ent">entropi</span> <b id="ent">0</b> bit</span>
+      <span><span data-t="crack">kırılma</span> <b id="crack">—</b></span>
+    </div>
+
+    <div class="tabs">
+      <div class="tab on" data-mode="chars" data-t="mChars">Karakter</div>
+      <div class="tab" data-mode="phrase" data-t="mPhrase">Parola Cümlesi</div>
+      <div class="tab" data-mode="pin" data-t="mPin">PIN</div>
+    </div>
+
+    <div id="charOpts">
+      <div class="lenwrap">
+        <input type="range" id="len" min="6" max="64" value="20">
+        <span class="lenval" id="lenval">20</span>
+      </div>
+      <div class="row"><label><span data-t="oUp">Büyük harf</span><span class="hint">A-Z</span></label>
+        <span class="sw"><input type="checkbox" id="oUp" checked><span class="track"></span></span></div>
+      <div class="row"><label><span data-t="oLow">Küçük harf</span><span class="hint">a-z</span></label>
+        <span class="sw"><input type="checkbox" id="oLow" checked><span class="track"></span></span></div>
+      <div class="row"><label><span data-t="oNum">Rakam</span><span class="hint">0-9</span></label>
+        <span class="sw"><input type="checkbox" id="oNum" checked><span class="track"></span></span></div>
+      <div class="row"><label><span data-t="oSym">Sembol</span><span class="hint">!@#$%^&*...</span></label>
+        <span class="sw"><input type="checkbox" id="oSym" checked><span class="track"></span></span></div>
+      <div class="row"><label><span data-t="oAmb">Karışanları hariç tut</span><span class="hint">O 0 I l 1 | vb.</span></label>
+        <span class="sw"><input type="checkbox" id="oAmb"><span class="track"></span></span></div>
+    </div>
+
+    <div id="phraseOpts" class="hidden">
+      <div class="lenwrap">
+        <input type="range" id="words" min="3" max="10" value="5">
+        <span class="lenval" id="wordsval">5</span>
+      </div>
+      <div class="row"><label data-t="sep">Ayraç</label>
+        <select id="sep">
+          <option value="-">-</option><option value=".">.</option>
+          <option value="_">_</option><option value=" ">␣</option>
+        </select></div>
+      <div class="row"><label data-t="pCap">Her kelimeyi büyük başlat</label>
+        <span class="sw"><input type="checkbox" id="pCap" checked><span class="track"></span></span></div>
+      <div class="row"><label data-t="pNum">Sona rakam ekle</label>
+        <span class="sw"><input type="checkbox" id="pNum" checked><span class="track"></span></span></div>
+    </div>
+
+    <div id="pinOpts" class="hidden">
+      <div class="lenwrap">
+        <input type="range" id="pinLen" min="3" max="12" value="6">
+        <span class="lenval" id="pinLenval">6</span>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:4px">
+      <label data-t="count">Adet</label>
+      <div class="seg" id="count">
+        <button data-n="1" class="on">1</button><button data-n="5">5</button><button data-n="10">10</button>
+      </div>
+    </div>
+    <div class="row">
+      <label><span data-t="autoclear">Panoyu 15 sn sonra temizle</span><span class="hint" data-t="autoclearHint">kopyalanan şifreyi siler</span></label>
+      <span class="sw"><input type="checkbox" id="autoclear" checked><span class="track"></span></span></div>
+
+    <button class="gen" id="gen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <span data-t="btn">Şifre Üret</span>
+    </button>
+
+    <div class="bulk" id="bulk"></div>
+  </div>
+  <div class="foot">
+    <div><span data-t="foot1">tamamı cihazında</span> · crypto.getRandomValues · <span data-t="foot2">sunucu yok</span></div>
+    <div><kbd>Enter</kbd> <span data-t="k1">yenile</span> · <kbd>Ctrl+C</kbd> <span data-t="k2">kopyala</span></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const SETS={up:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",low:"abcdefghijklmnopqrstuvwxyz",num:"0123456789",sym:"!@#$%^&*()-_=+[]{};:,.<>?/"};
+const AMB=new Set("O0Il1|`'\"{}[]()/\\;:,.<>".split(""));
+const WORDS="zaman deniz yildiz orman kartal ejder gece gunes ruzgar firtina cinar demir gumus altin cesur bilge kaya nehir sema kutup panter sahin volkan golge kristal lav mermer safir yakut zumrut atlas kobalt titan neon prizma vektor matris kuantum foton nova pulsar galaksi meteor komet asteroit hidra kobra puma lynx bizon ceylan doruk zirve fener kule liman koru bahar yaprak tohum kok dal filiz sarmasik zumruduanka simsek yagmur kar buz alev toprak gokyuzu bulut dalga mercan inci lotus manolya orkide zambak menekse lale karanfil papatya nilüfer akasya kestane mese kavak selvi ardic sedir".split(" ");
+
+const I18N={
+  tr:{tag:"// güvenli şifre üreteci",ent:"entropi",crack:"kırılma",mChars:"Karakter",mPhrase:"Parola Cümlesi",mPin:"PIN",
+    oUp:"Büyük harf",oLow:"Küçük harf",oNum:"Rakam",oSym:"Sembol",oAmb:"Karışanları hariç tut",sep:"Ayraç",
+    pCap:"Her kelimeyi büyük başlat",pNum:"Sona rakam ekle",count:"Adet",autoclear:"Panoyu 15 sn sonra temizle",
+    autoclearHint:"kopyalanan şifreyi siler",btn:"Şifre Üret",foot1:"tamamı cihazında",foot2:"sunucu yok",
+    k1:"yenile",k2:"kopyala",copied:"Kopyalandı ✓",copiedAll:"Hepsi kopyalandı ✓",cleared:"Pano temizlendi",
+    pick:"en az bir set seçin",reroll:"Yenile",copy:"Kopyala",
+    lv:["Zayıf","Orta","İyi","Güçlü","Çok Güçlü"],
+    inst:"anında",secs:"saniye",mins:"dakika",hours:"saat",days:"gün",years:"yıl",cent:"yüzyıl",eons:"sonsuz"},
+  en:{tag:"// secure password generator",ent:"entropy",crack:"crack",mChars:"Characters",mPhrase:"Passphrase",mPin:"PIN",
+    oUp:"Uppercase",oLow:"Lowercase",oNum:"Digits",oSym:"Symbols",oAmb:"Exclude ambiguous",sep:"Separator",
+    pCap:"Capitalize each word",pNum:"Append digits",count:"Count",autoclear:"Clear clipboard after 15s",
+    autoclearHint:"wipes the copied password",btn:"Generate",foot1:"fully on-device",foot2:"no server",
+    k1:"reroll",k2:"copy",copied:"Copied ✓",copiedAll:"All copied ✓",cleared:"Clipboard cleared",
+    pick:"select at least one set",reroll:"Reroll",copy:"Copy",
+    lv:["Weak","Fair","Good","Strong","Very Strong"],
+    inst:"instant",secs:"seconds",mins:"minutes",hours:"hours",days:"days",years:"years",cent:"centuries",eons:"forever"}
+};
+
+const $=id=>document.getElementById(id);
+const rand=n=>{const max=Math.floor(0xffffffff/n)*n;const b=new Uint32Array(1);do{crypto.getRandomValues(b)}while(b[0]>=max);return b[0]%n;};
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+
+let mode="chars", lang="tr", count=1, clearTimer=null;
+const L=()=>I18N[lang];
+
+function loadPrefs(){
+  try{const p=JSON.parse(localStorage.getItem("tlkpass")||"{}");
+    if(p.lang)lang=p.lang;
+    if(p.len)$("len").value=p.len;
+    if(p.words)$("words").value=p.words;
+    if(p.pinLen)$("pinLen").value=p.pinLen;
+    if(p.sep)$("sep").value=p.sep;
+    ["oUp","oLow","oNum","oSym","oAmb","pCap","pNum","autoclear"].forEach(k=>{if(k in p)$(k).checked=p[k]});
+  }catch{}
+}
+function savePrefs(){
+  const p={lang,len:$("len").value,words:$("words").value,pinLen:$("pinLen").value,sep:$("sep").value};
+  ["oUp","oLow","oNum","oSym","oAmb","pCap","pNum","autoclear"].forEach(k=>p[k]=$(k).checked);
+  localStorage.setItem("tlkpass",JSON.stringify(p));
+}
+
+function buildPool(){
+  let pool="";const req=[];
+  if($("oUp").checked){pool+=SETS.up;req.push(SETS.up)}
+  if($("oLow").checked){pool+=SETS.low;req.push(SETS.low)}
+  if($("oNum").checked){pool+=SETS.num;req.push(SETS.num)}
+  if($("oSym").checked){pool+=SETS.sym;req.push(SETS.sym)}
+  if($("oAmb").checked){
+    pool=[...pool].filter(c=>!AMB.has(c)).join("");
+    for(let i=0;i<req.length;i++)req[i]=[...req[i]].filter(c=>!AMB.has(c)).join("");
+  }
+  return {pool,req:req.filter(s=>s.length)};
+}
+function genChars(){
+  const {pool,req}=buildPool();if(!pool)return "";
+  const len=+$("len").value,out=[];
+  for(const s of req){if(out.length<len)out.push(s[rand(s.length)])}
+  while(out.length<len)out.push(pool[rand(pool.length)]);
+  return shuffle(out).join("");
+}
+function genPhrase(){
+  const n=+$("words").value,sep=$("sep").value,cap=$("pCap").checked,parts=[];
+  for(let i=0;i<n;i++){let w=WORDS[rand(WORDS.length)];if(cap)w=w[0].toUpperCase()+w.slice(1);parts.push(w)}
+  let out=parts.join(sep);if($("pNum").checked)out+=sep+(rand(90)+10);return out;
+}
+function genPin(){let s="";const n=+$("pinLen").value;for(let i=0;i<n;i++)s+=rand(10);return s}
+function gen(){return mode==="chars"?genChars():mode==="phrase"?genPhrase():genPin()}
+
+function entropy(pw){
+  if(mode==="phrase"){let b=(+$("words").value)*Math.log2(WORDS.length);if($("pNum").checked)b+=Math.log2(90);return b}
+  if(mode==="pin")return (+$("pinLen").value)*Math.log2(10);
+  const p=buildPool().pool.length;return p>1?pw.length*Math.log2(p):0;
+}
+function crackTime(bits){
+  const guesses=Math.pow(2,bits)/2, perSec=1e11, s=guesses/perSec, t=L();
+  if(s<1)return t.inst;
+  const u=[[31536000*100,t.cent],[31536000,t.years],[86400,t.days],[3600,t.hours],[60,t.mins],[1,t.secs]];
+  if(s>31536000*1e6)return t.eons;
+  for(const [d,name] of u){if(s>=d){const v=s/d;return (v>=100?Math.round(v):v>=10?Math.round(v):v.toFixed(1))+" "+name}}
+  return t.inst;
+}
+
+function paint(el,pw){
+  el.innerHTML="";
+  for(const ch of pw){const s=document.createElement("span");
+    if(/[0-9]/.test(ch))s.className="d";else if(/[A-Z]/.test(ch))s.className="u";else if(/[a-z]/.test(ch))s.className="";else s.className="s";
+    s.textContent=ch;el.appendChild(s)}
+}
+function updateStrength(pw){
+  const bits=Math.round(entropy(pw));$("ent").textContent=bits;$("crack").textContent=crackTime(bits);
+  let lvl,col;
+  if(bits<40){lvl=1;col="var(--warn)"}else if(bits<60){lvl=2;col="var(--mid)"}
+  else if(bits<80){lvl=3;col="var(--accent2)"}else if(bits<110){lvl=4;col="var(--accent)"}else{lvl=5;col="var(--accent)"}
+  $("label").textContent=L().lv[lvl-1];$("label").style.color=col;
+  [...$("meter").children].forEach((b,i)=>b.style.background=i<lvl?col:"#20242f");
+}
+
+function generate(){
+  savePrefs();
+  const first=gen();
+  if(!first){$("pw").textContent=L().pick;$("ent").textContent=0;$("crack").textContent="—";
+    $("label").textContent="—";[...$("meter").children].forEach(b=>b.style.background="#20242f");$("bulk").classList.remove("on");return}
+  paint($("pw"),first);updateStrength(first);
+  const bulk=$("bulk");bulk.innerHTML="";
+  if(count>1){
+    bulk.classList.add("on");
+    const all=[first];for(let i=1;i<count;i++)all.push(gen());
+    all.forEach(p=>{
+      const row=document.createElement("div");row.className="item";
+      const sp=document.createElement("span");paint(sp,p);
+      const btn=document.createElement("button");btn.title=L().copy;
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+      btn.onclick=()=>copyText(p);
+      row.append(sp,btn);bulk.appendChild(row)});
+    const ca=document.createElement("button");ca.className="copyall";ca.textContent="⧉ "+(lang==="tr"?"Hepsini kopyala":"Copy all");
+    ca.onclick=()=>copyText(all.join("\n"),L().copiedAll);bulk.appendChild(ca);
+  }else bulk.classList.remove("on");
+}
+
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("on"),1800)}
+
+async function copyText(text,msg){
+  if(!text)return;
+  try{await navigator.clipboard.writeText(text)}
+  catch{const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove()}
+  toast(msg||L().copied);
+  if($("autoclear").checked){
+    clearTimeout(clearTimer);
+    clearTimer=setTimeout(async()=>{try{await navigator.clipboard.writeText("")}catch{}toast(L().cleared)},15000);
+  }
+}
+function copyMain(){const pw=$("pw").textContent;if(!pw||pw===L().pick)return;
+  const c=$("copy");c.classList.add("copied");setTimeout(()=>c.classList.remove("copied"),900);copyText(pw)}
+
+function applyLang(){
+  const t=L();document.documentElement.lang=lang;
+  document.querySelectorAll("[data-t]").forEach(el=>{const k=el.dataset.t;if(t[k])el.textContent=t[k]});
+  $("reroll").title=t.reroll;$("copy").title=t.copy;
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+  generate();
+}
+
+$("len").oninput=e=>{$("lenval").textContent=e.target.value;generate()};
+$("words").oninput=e=>{$("wordsval").textContent=e.target.value;generate()};
+$("pinLen").oninput=e=>{$("pinLenval").textContent=e.target.value;generate()};
+["oUp","oLow","oNum","oSym","oAmb","pCap","pNum","autoclear"].forEach(id=>$(id).onchange=generate);
+$("sep").onchange=generate;$("gen").onclick=generate;$("reroll").onclick=generate;$("copy").onclick=copyMain;
+
+document.querySelectorAll(".tab").forEach(tb=>tb.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));tb.classList.add("on");mode=tb.dataset.mode;
+  $("charOpts").classList.toggle("hidden",mode!=="chars");
+  $("phraseOpts").classList.toggle("hidden",mode!=="phrase");
+  $("pinOpts").classList.toggle("hidden",mode!=="pin");generate();
+});
+$("count").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+  $("count").querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");count=+b.dataset.n;generate()});
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;savePrefs();applyLang()});
+
+addEventListener("keydown",e=>{
+  if(e.target.tagName==="SELECT")return;
+  if(e.key==="Enter"){e.preventDefault();generate()}
+  if((e.ctrlKey||e.metaKey)&&e.key==="c"&&!getSelection().toString()){copyMain()}
+});
+
+loadPrefs();
+$("lenval").textContent=$("len").value;$("wordsval").textContent=$("words").value;$("pinLenval").textContent=$("pinLen").value;
+applyLang();
+</script>
+</body>
+</html>
