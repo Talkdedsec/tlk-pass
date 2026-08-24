@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  claims:
+    name: The README's claims still hold
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Randomness comes from Web Crypto only
+        run: |
+          if grep -n "Math\.random" index.html; then
+            echo "::error file=index.html::Math.random() is not an acceptable source of randomness here"
+            exit 1
+          fi
+          grep -q "crypto.getRandomValues" index.html
+
+      - name: Nothing reaches the network
+        run: |
+          if grep -nE 'src="http|href="http|@import|fetch\(|XMLHttpRequest|WebSocket|navigator\.sendBeacon|new Image\(|import\(' index.html; then
+            echo "::error file=index.html::an external reference or a network call appeared in a file that claims to have neither"
+            exit 1
+          fi
+
+      - name: The page carries its own CSP
+        run: grep -q "default-src 'none'" index.html
+
+      - name: It is still one file with no dependencies
+        run: |
+          test ! -e package.json
+          test "$(find . -name '*.html' -not -path './.git/*' | wc -l)" -eq 1
+
+      - name: HTML is valid
+        run: npx --yes htmlhint index.html
