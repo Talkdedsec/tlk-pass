@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://talkdedsec1.github.io/tlk-pass/"><b>Live demo</b></a>
+  <a href="https://talkdedsec.github.io/tlk-pass/"><b>Live demo</b></a>
   &nbsp;·&nbsp;
   <a href="#how-the-randomness-works"><b>How it works</b></a>
   &nbsp;·&nbsp;
@@ -120,10 +120,10 @@ copying falls back to a hidden textarea and `document.execCommand("copy")`, and 
 
 ## Use it
 
-Open [the live demo](https://talkdedsec1.github.io/tlk-pass/), or:
+Open [the live demo](https://talkdedsec.github.io/tlk-pass/), or:
 
 ```bash
-git clone https://github.com/Talkdedsec1/tlk-pass
+git clone https://github.com/Talkdedsec/tlk-pass
 ```
 
 and double-click `index.html`. To carry it around, that one file is the whole program — copy it to a

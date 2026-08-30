@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://talkdedsec1.github.io/tlk-pass/"><b>Canlı demo</b></a>
+  <a href="https://talkdedsec.github.io/tlk-pass/"><b>Canlı demo</b></a>
   &nbsp;·&nbsp;
   <a href="#rastgelelik-nasıl-çalışıyor"><b>Nasıl çalışıyor</b></a>
   &nbsp;·&nbsp;
@@ -118,10 +118,10 @@ textarea ve `document.execCommand("copy")` ile yapılıyor, 15 saniyelik temizli
 
 ## Kullan
 
-[Canlı demoyu](https://talkdedsec1.github.io/tlk-pass/) aç ya da:
+[Canlı demoyu](https://talkdedsec.github.io/tlk-pass/) aç ya da:
 
 ```bash
-git clone https://github.com/Talkdedsec1/tlk-pass
+git clone https://github.com/Talkdedsec/tlk-pass
 ```
 
 sonra `index.html`'e çift tıkla. Yanında taşımak için o tek dosya programın tamamı — USB belleğe
