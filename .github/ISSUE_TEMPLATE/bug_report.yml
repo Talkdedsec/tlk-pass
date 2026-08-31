@@ -1,0 +1,46 @@
+name: Bug report
+description: The page does something other than what it says it does
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The page is one file with no build step, so a bug is almost always reproducible by
+        opening `index.html` directly. Tell us which browser and whether you opened it from
+        disk or from the hosted demo — the two differ in what the browser allows.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got instead.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: how
+    attributes:
+      label: How were you running it?
+      options:
+        - Saved to disk, opened with file://
+        - The hosted demo on github.io
+        - Served from my own web server
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Firefox 145, Chrome 141, Safari 26
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Which copy of the file
+      description: The release tag, or the date you downloaded it.
+      placeholder: v1.0.0
+    validations:
+      required: true
