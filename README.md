@@ -32,12 +32,13 @@ no package to install and nothing to trust beyond the file you are looking at.
 | Mode | Range | Notes |
 |:--|:--|:--|
 | **Characters** | 6–64 | uppercase, lowercase, digits, symbols, each toggleable; at least one of every enabled class is guaranteed |
-| **Passphrase** | 3–10 words | pick the separator, optionally capitalise each word and append two digits |
+| **Passphrase** | 3–10 words | pick the separator, optionally capitalise each word and append two digits; words come from a 92-word list in the interface language |
 | **PIN** | 3–12 digits | uniform, no repeated-digit shortcuts |
 
 One, five or ten at a time, copied individually or in a batch. Entropy in bits and an estimated crack
-time update as you move the sliders, `Enter` re-rolls, `Ctrl+C` copies. The interface is Turkish and
-English, and both the language and the slider positions are remembered in `localStorage`.
+time update as you move the sliders, `Enter` re-rolls, `Ctrl+C` copies. The interface is English and
+Turkish: it opens in your browser's language, and the language you pick is remembered in
+`localStorage` along with the slider positions.
 
 ## How the randomness works
 
@@ -68,7 +69,8 @@ The number under the password is the real one, not a scoring heuristic:
 
 - **Characters** — `length × log₂(pool size)`. A 20-character password with all four classes on draws
   from an 88-character pool, so 20 × 6.46 ≈ **129 bits**.
-- **Passphrase** — `words × log₂(92)`, plus `log₂(90)` if digits are appended.
+- **Passphrase** — `words × log₂(92)`, plus `log₂(90)` if digits are appended. The English and Turkish
+  lists are both 92 words, so the strength does not depend on the language.
 - **PIN** — `digits × log₂(10)`.
 
 The crack estimate assumes 10¹¹ guesses per second against an unsalted fast hash and halves the
@@ -82,8 +84,8 @@ contains zero external references, which is why it works with the machine offlin
 Policy of `default-src 'none'` is set in the document itself, so even a future edit that added a
 network call would be blocked by the page's own header.
 
-The only thing written anywhere is `localStorage.tlkpass`, holding your language and slider
-positions. Generated passwords are never stored.
+The only thing written anywhere is `localStorage.tlkpass`, holding your slider positions and, once
+you pick one, your language. Generated passwords are never stored.
 
 ## Known limits
 

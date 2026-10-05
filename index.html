@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -128,7 +128,7 @@
 <body>
 <div class="app">
   <div class="brand">
-    <span class="dot"></span><b>TLK&nbsp;Pass</b><span id="tag" data-t="tag">// güvenli şifre üreteci</span>
+    <span class="dot"></span><b>TLK&nbsp;Pass</b><span id="tag" data-t="tag">// secure password generator</span>
     <span class="lang"><button data-lang="tr" class="on">TR</button><button data-lang="en">EN</button></span>
   </div>
   <div class="card">
@@ -147,13 +147,13 @@
     <div class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i></div>
     <div class="meta">
       <span id="label">—</span>
-      <span><span data-t="ent">entropi</span> <b id="ent">0</b> bit</span>
-      <span><span data-t="crack">kırılma</span> <b id="crack">—</b></span>
+      <span><span data-t="ent">entropy</span> <b id="ent">0</b> bit</span>
+      <span><span data-t="crack">crack</span> <b id="crack">—</b></span>
     </div>
 
     <div class="tabs">
-      <div class="tab on" data-mode="chars" data-t="mChars">Karakter</div>
-      <div class="tab" data-mode="phrase" data-t="mPhrase">Parola Cümlesi</div>
+      <div class="tab on" data-mode="chars" data-t="mChars">Characters</div>
+      <div class="tab" data-mode="phrase" data-t="mPhrase">Passphrase</div>
       <div class="tab" data-mode="pin" data-t="mPin">PIN</div>
     </div>
 
@@ -162,15 +162,15 @@
         <input type="range" id="len" min="6" max="64" value="20">
         <span class="lenval" id="lenval">20</span>
       </div>
-      <div class="row"><label><span data-t="oUp">Büyük harf</span><span class="hint">A-Z</span></label>
+      <div class="row"><label><span data-t="oUp">Uppercase</span><span class="hint">A-Z</span></label>
         <span class="sw"><input type="checkbox" id="oUp" checked><span class="track"></span></span></div>
-      <div class="row"><label><span data-t="oLow">Küçük harf</span><span class="hint">a-z</span></label>
+      <div class="row"><label><span data-t="oLow">Lowercase</span><span class="hint">a-z</span></label>
         <span class="sw"><input type="checkbox" id="oLow" checked><span class="track"></span></span></div>
-      <div class="row"><label><span data-t="oNum">Rakam</span><span class="hint">0-9</span></label>
+      <div class="row"><label><span data-t="oNum">Digits</span><span class="hint">0-9</span></label>
         <span class="sw"><input type="checkbox" id="oNum" checked><span class="track"></span></span></div>
-      <div class="row"><label><span data-t="oSym">Sembol</span><span class="hint">!@#$%^&*...</span></label>
+      <div class="row"><label><span data-t="oSym">Symbols</span><span class="hint">!@#$%^&*...</span></label>
         <span class="sw"><input type="checkbox" id="oSym" checked><span class="track"></span></span></div>
-      <div class="row"><label><span data-t="oAmb">Karışanları hariç tut</span><span class="hint">O 0 I l 1 | vb.</span></label>
+      <div class="row"><label><span data-t="oAmb">Exclude ambiguous</span><span class="hint">O 0 I l 1 | vb.</span></label>
         <span class="sw"><input type="checkbox" id="oAmb"><span class="track"></span></span></div>
     </div>
 
@@ -179,14 +179,14 @@
         <input type="range" id="words" min="3" max="10" value="5">
         <span class="lenval" id="wordsval">5</span>
       </div>
-      <div class="row"><label data-t="sep">Ayraç</label>
+      <div class="row"><label data-t="sep">Separator</label>
         <select id="sep">
           <option value="-">-</option><option value=".">.</option>
           <option value="_">_</option><option value=" ">␣</option>
         </select></div>
-      <div class="row"><label data-t="pCap">Her kelimeyi büyük başlat</label>
+      <div class="row"><label data-t="pCap">Capitalize each word</label>
         <span class="sw"><input type="checkbox" id="pCap" checked><span class="track"></span></span></div>
-      <div class="row"><label data-t="pNum">Sona rakam ekle</label>
+      <div class="row"><label data-t="pNum">Append digits</label>
         <span class="sw"><input type="checkbox" id="pNum" checked><span class="track"></span></span></div>
     </div>
 
@@ -198,25 +198,25 @@
     </div>
 
     <div class="row" style="margin-top:4px">
-      <label data-t="count">Adet</label>
+      <label data-t="count">Count</label>
       <div class="seg" id="count">
         <button data-n="1" class="on">1</button><button data-n="5">5</button><button data-n="10">10</button>
       </div>
     </div>
     <div class="row">
-      <label><span data-t="autoclear">Panoyu 15 sn sonra temizle</span><span class="hint" data-t="autoclearHint">kopyalanan şifreyi siler</span></label>
+      <label><span data-t="autoclear">Clear clipboard after 15s</span><span class="hint" data-t="autoclearHint">wipes the copied password</span></label>
       <span class="sw"><input type="checkbox" id="autoclear" checked><span class="track"></span></span></div>
 
     <button class="gen" id="gen">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      <span data-t="btn">Şifre Üret</span>
+      <span data-t="btn">Generate</span>
     </button>
 
     <div class="bulk" id="bulk"></div>
   </div>
   <div class="foot">
-    <div><span data-t="foot1">tamamı cihazında</span> · crypto.getRandomValues · <span data-t="foot2">sunucu yok</span></div>
-    <div><kbd>Enter</kbd> <span data-t="k1">yenile</span> · <kbd>Ctrl+C</kbd> <span data-t="k2">kopyala</span></div>
+    <div><span data-t="foot1">fully on-device</span> · crypto.getRandomValues · <span data-t="foot2">no server</span></div>
+    <div><kbd>Enter</kbd> <span data-t="k1">reroll</span> · <kbd>Ctrl+C</kbd> <span data-t="k2">copy</span></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -225,17 +225,12 @@
 "use strict";
 const SETS={up:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",low:"abcdefghijklmnopqrstuvwxyz",num:"0123456789",sym:"!@#$%^&*()-_=+[]{};:,.<>?/"};
 const AMB=new Set("O0Il1|`'\"{}[]()/\\;:,.<>".split(""));
-const WORDS="zaman deniz yildiz orman kartal ejder gece gunes ruzgar firtina cinar demir gumus altin cesur bilge kaya nehir sema kutup panter sahin volkan golge kristal lav mermer safir yakut zumrut atlas kobalt titan neon prizma vektor matris kuantum foton nova pulsar galaksi meteor komet asteroit hidra kobra puma lynx bizon ceylan doruk zirve fener kule liman koru bahar yaprak tohum kok dal filiz sarmasik zumruduanka simsek yagmur kar buz alev toprak gokyuzu bulut dalga mercan inci lotus manolya orkide zambak menekse lale karanfil papatya nilüfer akasya kestane mese kavak selvi ardic sedir".split(" ");
+const WORDS={
+  en:"time sea star forest eagle dragon night sun wind storm sycamore iron silver gold brave wise rock river heaven polar panther falcon volcano shadow crystal lava marble sapphire ruby emerald atlas cobalt titan neon prism vector matrix quantum photon nova pulsar galaxy meteor comet asteroid hydra cobra puma lynx bison gazelle peak summit lantern tower harbor grove spring leaf seed root branch sprout ivy phoenix lightning rain snow ice flame earth sky cloud wave coral pearl lotus magnolia orchid lily violet tulip carnation daisy waterlily acacia chestnut oak poplar cypress juniper cedar".split(" "),
+  tr:"zaman deniz yildiz orman kartal ejder gece gunes ruzgar firtina cinar demir gumus altin cesur bilge kaya nehir sema kutup panter sahin volkan golge kristal lav mermer safir yakut zumrut atlas kobalt titan neon prizma vektor matris kuantum foton nova pulsar galaksi meteor komet asteroit hidra kobra puma lynx bizon ceylan doruk zirve fener kule liman koru bahar yaprak tohum kok dal filiz sarmasik zumruduanka simsek yagmur kar buz alev toprak gokyuzu bulut dalga mercan inci lotus manolya orkide zambak menekse lale karanfil papatya nilufer akasya kestane mese kavak selvi ardic sedir".split(" ")
+};
 
 const I18N={
-  tr:{tag:"// güvenli şifre üreteci",ent:"entropi",crack:"kırılma",mChars:"Karakter",mPhrase:"Parola Cümlesi",mPin:"PIN",
-    oUp:"Büyük harf",oLow:"Küçük harf",oNum:"Rakam",oSym:"Sembol",oAmb:"Karışanları hariç tut",sep:"Ayraç",
-    pCap:"Her kelimeyi büyük başlat",pNum:"Sona rakam ekle",count:"Adet",autoclear:"Panoyu 15 sn sonra temizle",
-    autoclearHint:"kopyalanan şifreyi siler",btn:"Şifre Üret",foot1:"tamamı cihazında",foot2:"sunucu yok",
-    k1:"yenile",k2:"kopyala",copied:"Kopyalandı ✓",copiedAll:"Hepsi kopyalandı ✓",cleared:"Pano temizlendi",
-    pick:"en az bir set seçin",reroll:"Yenile",copy:"Kopyala",
-    lv:["Zayıf","Orta","İyi","Güçlü","Çok Güçlü"],
-    inst:"anında",secs:"saniye",mins:"dakika",hours:"saat",days:"gün",years:"yıl",cent:"yüzyıl",eons:"sonsuz"},
   en:{tag:"// secure password generator",ent:"entropy",crack:"crack",mChars:"Characters",mPhrase:"Passphrase",mPin:"PIN",
     oUp:"Uppercase",oLow:"Lowercase",oNum:"Digits",oSym:"Symbols",oAmb:"Exclude ambiguous",sep:"Separator",
     pCap:"Capitalize each word",pNum:"Append digits",count:"Count",autoclear:"Clear clipboard after 15s",
@@ -243,19 +238,31 @@ const I18N={
     k1:"reroll",k2:"copy",copied:"Copied ✓",copiedAll:"All copied ✓",cleared:"Clipboard cleared",
     pick:"select at least one set",reroll:"Reroll",copy:"Copy",
     lv:["Weak","Fair","Good","Strong","Very Strong"],
-    inst:"instant",secs:"seconds",mins:"minutes",hours:"hours",days:"days",years:"years",cent:"centuries",eons:"forever"}
+    inst:"instant",secs:"seconds",mins:"minutes",hours:"hours",days:"days",years:"years",cent:"centuries",eons:"forever",copyAll:"Copy all"},
+  tr:{tag:"// güvenli şifre üreteci",ent:"entropi",crack:"kırılma",mChars:"Karakter",mPhrase:"Parola Cümlesi",mPin:"PIN",
+    oUp:"Büyük harf",oLow:"Küçük harf",oNum:"Rakam",oSym:"Sembol",oAmb:"Karışanları hariç tut",sep:"Ayraç",
+    pCap:"Her kelimeyi büyük başlat",pNum:"Sona rakam ekle",count:"Adet",autoclear:"Panoyu 15 sn sonra temizle",
+    autoclearHint:"kopyalanan şifreyi siler",btn:"Şifre Üret",foot1:"tamamı cihazında",foot2:"sunucu yok",
+    k1:"yenile",k2:"kopyala",copied:"Kopyalandı ✓",copiedAll:"Hepsi kopyalandı ✓",cleared:"Pano temizlendi",
+    pick:"en az bir set seçin",reroll:"Yenile",copy:"Kopyala",
+    lv:["Zayıf","Orta","İyi","Güçlü","Çok Güçlü"],
+    inst:"anında",secs:"saniye",mins:"dakika",hours:"saat",days:"gün",years:"yıl",cent:"yüzyıl",eons:"sonsuz",copyAll:"Hepsini kopyala"}
 };
 
 const $=id=>document.getElementById(id);
 const rand=n=>{const max=Math.floor(0xffffffff/n)*n;const b=new Uint32Array(1);do{crypto.getRandomValues(b)}while(b[0]>=max);return b[0]%n;};
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
 
-let mode="chars", lang="tr", count=1, clearTimer=null;
+let mode="chars", count=1, clearTimer=null;
+// Turkish for Turkish browsers, English otherwise, until the user picks one.
+let lang=(navigator.language||"").toLowerCase().startsWith("tr")?"tr":"en", langChosen=false;
 const L=()=>I18N[lang];
 
 function loadPrefs(){
   try{const p=JSON.parse(localStorage.getItem("tlkpass")||"{}");
-    if(p.lang)lang=p.lang;
+    // Older versions stored the Turkish default as p.lang on every save, so only "en" there was a choice.
+    const saved=p.language==="en"||p.language==="tr"?p.language:p.lang==="en"?"en":null;
+    if(saved){lang=saved;langChosen=true}
     if(p.len)$("len").value=p.len;
     if(p.words)$("words").value=p.words;
     if(p.pinLen)$("pinLen").value=p.pinLen;
@@ -264,7 +271,8 @@ function loadPrefs(){
   }catch{}
 }
 function savePrefs(){
-  const p={lang,len:$("len").value,words:$("words").value,pinLen:$("pinLen").value,sep:$("sep").value};
+  const p={len:$("len").value,words:$("words").value,pinLen:$("pinLen").value,sep:$("sep").value};
+  if(langChosen)p.language=lang;
   ["oUp","oLow","oNum","oSym","oAmb","pCap","pNum","autoclear"].forEach(k=>p[k]=$(k).checked);
   localStorage.setItem("tlkpass",JSON.stringify(p));
 }
@@ -290,14 +298,14 @@ function genChars(){
 }
 function genPhrase(){
   const n=+$("words").value,sep=$("sep").value,cap=$("pCap").checked,parts=[];
-  for(let i=0;i<n;i++){let w=WORDS[rand(WORDS.length)];if(cap)w=w[0].toUpperCase()+w.slice(1);parts.push(w)}
+  for(let i=0;i<n;i++){let w=WORDS[lang][rand(WORDS[lang].length)];if(cap)w=w[0].toUpperCase()+w.slice(1);parts.push(w)}
   let out=parts.join(sep);if($("pNum").checked)out+=sep+(rand(90)+10);return out;
 }
 function genPin(){let s="";const n=+$("pinLen").value;for(let i=0;i<n;i++)s+=rand(10);return s}
 function gen(){return mode==="chars"?genChars():mode==="phrase"?genPhrase():genPin()}
 
 function entropy(pw){
-  if(mode==="phrase"){let b=(+$("words").value)*Math.log2(WORDS.length);if($("pNum").checked)b+=Math.log2(90);return b}
+  if(mode==="phrase"){let b=(+$("words").value)*Math.log2(WORDS[lang].length);if($("pNum").checked)b+=Math.log2(90);return b}
   if(mode==="pin")return (+$("pinLen").value)*Math.log2(10);
   const p=buildPool().pool.length;return p>1?pw.length*Math.log2(p):0;
 }
@@ -342,7 +350,7 @@ function generate(){
       btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
       btn.onclick=()=>copyText(p);
       row.append(sp,btn);bulk.appendChild(row)});
-    const ca=document.createElement("button");ca.className="copyall";ca.textContent="⧉ "+(lang==="tr"?"Hepsini kopyala":"Copy all");
+    const ca=document.createElement("button");ca.className="copyall";ca.textContent="⧉ "+L().copyAll;
     ca.onclick=()=>copyText(all.join("\n"),L().copiedAll);bulk.appendChild(ca);
   }else bulk.classList.remove("on");
 }
@@ -384,7 +392,7 @@ document.querySelectorAll(".tab").forEach(tb=>tb.onclick=()=>{
 });
 $("count").querySelectorAll("button").forEach(b=>b.onclick=()=>{
   $("count").querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");count=+b.dataset.n;generate()});
-document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;savePrefs();applyLang()});
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;langChosen=true;savePrefs();applyLang()});
 
 addEventListener("keydown",e=>{
   if(e.target.tagName==="SELECT")return;

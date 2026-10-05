@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- Opens in the browser's language: Turkish for Turkish browsers, English otherwise. The language is
+  saved only once you pick one; the Turkish default that older versions saved on every visit no
+  longer pins anyone to Turkish.
+- Passphrases use words in the interface language. The new English list is the Turkish one
+  translated word for word, also 92 words, so the entropy is unchanged; "nilüfer" became
+  "nilufer" so every Turkish word is plain ASCII like the rest.
+- The page markup, `lang` attribute and the catalog order are English-first; the last inline
+  Turkish string ("Copy all") moved into the catalog.
+
 ## 1.0.0 — 2026-08-24
 
 First tagged version. The generator itself has not changed; everything around it has.
