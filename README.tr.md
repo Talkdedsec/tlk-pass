@@ -36,8 +36,9 @@ dosyanın dışında güvenmen gereken hiçbir şey yok.
 | **PIN** | 3–12 hane | düzgün dağılım, tekrar eden hane kısayolu yok |
 
 Tek seferde 1, 5 ya da 10 üretim; tek tek ya da toplu kopyalama. Entropi (bit) ve tahmini kırılma
-süresi sen slider'ı oynattıkça güncelleniyor, `Enter` yeniliyor, `Ctrl+C` kopyalıyor. Arayüz Türkçe ve
-İngilizce; hem dil hem slider konumları `localStorage`'da hatırlanıyor.
+süresi sen slider'ı oynattıkça güncelleniyor, `Enter` yeniliyor, `Ctrl+C` kopyalıyor. Arayüz İngilizce ve
+Türkçe: tarayıcının dilinde açılıyor; seçtiğin dil slider konumlarıyla birlikte `localStorage`'da
+hatırlanıyor. Parola cümlesinin kelimeleri arayüz dilindeki 92 kelimelik listeden geliyor.
 
 ## Rastgelelik nasıl çalışıyor
 
@@ -67,7 +68,8 @@ Fisher–Yates; yani garanti, konum bilgisi sızdırmıyor.
 
 - **Karakter** — `uzunluk × log₂(havuz)`. Dört sınıf da açıkken havuz 88 karakter, 20 karakterlik bir
   şifre 20 × 6,46 ≈ **129 bit**.
-- **Parola cümlesi** — `kelime × log₂(92)`, rakam ekliyse artı `log₂(90)`.
+- **Parola cümlesi** — `kelime × log₂(92)`, rakam ekliyse artı `log₂(90)`. İngilizce ve Türkçe
+  listelerin ikisi de 92 kelime; güç dile göre değişmiyor.
 - **PIN** — `hane × log₂(10)`.
 
 Kırılma tahmini, tuzlanmamış hızlı bir hash'e karşı saniyede 10¹¹ deneme varsayıyor ve ortalama durum
@@ -81,7 +83,7 @@ içinde sıfır dış referans var, zaten bu yüzden makine çevrimdışıyken d
 içinde `default-src 'none'` içerikli bir Content Security Policy tanımlı, yani ileride biri ağ çağrısı
 ekleyecek olsa bile sayfa kendi başlığıyla onu engelliyor.
 
-Herhangi bir yere yazılan tek şey `localStorage.tlkpass`: dilin ve slider konumların. Üretilen
+Herhangi bir yere yazılan tek şey `localStorage.tlkpass`: slider konumların ve, seçtiysen, dilin. Üretilen
 şifreler hiçbir yerde saklanmıyor.
 
 ## Bilinen sınırlar
