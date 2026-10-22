@@ -132,3 +132,7 @@ kopyala, yeter. Depodaki başka hiçbir şey çalışma anında gerekmiyor.
 ## Lisans
 
 [MIT](LICENSE).
+
+<p align="center">
+  <sub><a href="https://talkdedsec.com">Talkdedsec</a> tarafından yapıldı</sub>
+</p>

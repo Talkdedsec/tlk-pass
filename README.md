@@ -134,3 +134,7 @@ USB stick. Nothing else in this repository is needed at runtime.
 ## Licence
 
 [MIT](LICENSE).
+
+<p align="center">
+  <sub>Built by <a href="https://talkdedsec.com">Talkdedsec</a></sub>
+</p>
