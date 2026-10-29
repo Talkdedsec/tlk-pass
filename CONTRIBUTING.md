@@ -25,6 +25,7 @@ grep -n "Math\.random" index.html          # must find nothing
 grep -q "crypto.getRandomValues" index.html
 grep -q "default-src 'none'" index.html
 npx --yes htmlhint index.html
+node --test tests/*.test.mjs                # generator tests, Node 20+, no install
 ```
 
 ## Changing how passwords are generated

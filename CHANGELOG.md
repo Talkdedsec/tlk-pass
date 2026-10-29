@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Generator tests (`tests/generator.test.mjs`) run the code straight from `index.html` and check
+  range and evenness of `rand`, length and set coverage, ambiguous-character exclusion,
+  passphrase and PIN shape, and the entropy figure. CI runs them on every push; still no
+  `package.json`.
 - Opens in the browser's language: Turkish for Turkish browsers, English otherwise. The language is
   saved only once you pick one; the Turkish default that older versions saved on every visit no
   longer pins anyone to Turkish.

@@ -41,3 +41,6 @@ jobs:
 
       - name: HTML is valid
         run: npx --yes htmlhint index.html
+
+      - name: The generator does what it says
+        run: node --test tests/*.test.mjs
